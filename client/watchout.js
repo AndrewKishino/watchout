@@ -10,9 +10,11 @@ for(var i = 0; i < 30; i++) {
 }
 
 var drag = d3.behavior.drag().on('drag', function() { 
-  hero.attr('cx', d3.event.x)
-      .attr('cy', d3.event.y); 
-  });
+  if((d3.event.x > 0 && d3.event.x < width) && (d3.event.y > 0 && d3.event.y < height)) {
+    hero.attr('cx', d3.event.x)
+        .attr('cy', d3.event.y); 
+  }
+});
    // .on('dragstart', function() { hero.style('fill', 'black'); })
    // .on('dragend', function() { hero.style('fill', 'black'); });
 
