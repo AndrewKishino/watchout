@@ -2,7 +2,8 @@
 
 var width = 960;
 var height = 500;
-
+var current = document.getElementsByClassName("currentScore")[0].innerHTML;
+var high = document.getElementsByClassName("highScore")[0].innerHTML;
 var enemies = [];
 
 for(var i = 0; i < 30; i++) {
@@ -15,9 +16,6 @@ var drag = d3.behavior.drag().on('drag', function() {
         .attr('cy', d3.event.y); 
   }
 });
-   // .on('dragstart', function() { hero.style('fill', 'black'); })
-   // .on('dragend', function() { hero.style('fill', 'black'); });
-
 
 var svg = d3.select(".container").append("svg")
   .attr("class", "board")
@@ -56,15 +54,35 @@ var update = function(array) {
     .attr("fill", "red");
 }
 
+var checkCollisions = function() {
+  for(var i = 0; i < 30; i++) {
+    var run = hero[0][0].getAttribute('cx') - enemies[i].x;
+    var rise = hero[0][0].getAttribute('cy') - enemies[i].y;
+    
+    if(Math.sqrt((rise*rise)+(run*run)) < 35) {
+      // collision counter++
+      // reset score
+
+      document.getElementsByClassName("currentScore")[0].innerHTML=0;
+      console.log("OUCH!")
+    }
+  }
+}
+
 update(enemies);
+
+setInterval(function(){
+  if(Number(document.getElementsByClassName("highScore")[0].innerHTML) < Number(document.getElementsByClassName("currentScore")[0].innerHTML)) {
+        console.log("this should happen")
+        document.getElementsByClassName("highScore")[0].innerHTML = document.getElementsByClassName("currentScore")[0].innerHTML;
+      }
+  checkCollisions()
+}, 10)
+
+setInterval(function(){
+  current = document.getElementsByClassName("currentScore")[0].innerHTML++;
+}, 100)
 
 setInterval(function() {
   update(enemies)
 }, 1500);
-
-var move = function() {
-  var mouse = d3.mouse(this);
-  x1 = mouse[0];
-  y1 = mouse[1];
-  d3.event.preventDefault();
-}
