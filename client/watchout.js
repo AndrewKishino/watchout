@@ -9,19 +9,18 @@ for(var i = 0; i < 30; i++) {
   enemies[i] = {}
 }
 
-// var Enemy = function() {
-//   this.x = Math.random() * width
-//   this.y = Math.random() * height
-// }
+var drag = d3.behavior.drag().on('drag', function() { 
+  hero.attr('cx', d3.event.x)
+      .attr('cy', d3.event.y); 
+  });
+   // .on('dragstart', function() { hero.style('fill', 'black'); })
+   // .on('dragend', function() { hero.style('fill', 'black'); });
 
-// Enemy.prototype.update = function() {
-//   this.e.transition.duration().attr('cs')
-// }
 
 var svg = d3.select(".container").append("svg")
-    .attr("class", "board")
-    .attr("width", width)
-    .attr("height", height);
+  .attr("class", "board")
+  .attr("width", width)
+  .attr("height", height);
 
 svg.selectAll("circle").data(enemies)
   .enter().append("circle")
@@ -31,16 +30,23 @@ svg.selectAll("circle").data(enemies)
   .attr("r", 15)
   .attr("fill", "red");
 
+var hero = d3.select(".board").append("circle")
+  .attr("class", "hero")
+  .attr("cx", width/2)
+  .attr("cy", height/2)
+  .attr("r", 15)
+  .attr("fill", "black")
+  .call(drag);
+
 var update = function(array) {
   for(var i = 0; i < array.length; i++) {
     enemies[i].x = Math.random()*width;
     enemies[i].y = Math.random()*height;
   }
 
-  var circEnemy = svg.selectAll("circle").data(enemies);
-    circEnemy
+  svg.selectAll("circle").data(enemies)
     .transition()
-    .duration(5000)
+    .duration(1500)
     .attr("class", "enemy")
     .attr("cx", function (d){return d.x;})
     .attr("cy", function (d){return d.y;})
@@ -48,14 +54,15 @@ var update = function(array) {
     .attr("fill", "red");
 }
 
-
-
-// var update = function(data) {
-
-//   // var enemy = svg.selectAll('circle').data(data);
-//   // enemy.append('circle');
-// }
 update(enemies);
+
 setInterval(function() {
   update(enemies)
-}, 5000);
+}, 1500);
+
+var move = function() {
+  var mouse = d3.mouse(this);
+  x1 = mouse[0];
+  y1 = mouse[1];
+  d3.event.preventDefault();
+}

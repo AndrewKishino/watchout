@@ -6,11 +6,7 @@ Feel free to use it if you like. */
 .container {
   text-align: center;
 }
-.circle {
-  
-}
-
 .board {
   margin:0 auto;
-  border: black solid 50px;
+  border: black solid 1px;
 }
