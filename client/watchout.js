@@ -62,9 +62,7 @@ var checkCollisions = function() {
     
     if(Math.sqrt((rise*rise)+(run*run)) < 20) {
       document.getElementsByClassName("currentScore")[0].innerHTML=0;
-      setTimeout(function(){
-        collisionCount = document.getElementsByClassName("collisionCount")[0].innerHTML++;
-      }, 1000);
+      collisionCount = document.getElementsByClassName("collisionCount")[0].innerHTML++;
     }
   }
 }
@@ -75,12 +73,14 @@ setInterval(function(){
   if(Number(document.getElementsByClassName("highScore")[0].innerHTML) < Number(document.getElementsByClassName("currentScore")[0].innerHTML)) {
     document.getElementsByClassName("highScore")[0].innerHTML = document.getElementsByClassName("currentScore")[0].innerHTML;
   }
-  checkCollisions();
-}, 1)
+  if(document.getElementsByClassName("currentScore")[0].innerHTML > 5) {
+    checkCollisions();
+  }
+}, 1);
 
 setInterval(function(){
   current = document.getElementsByClassName("currentScore")[0].innerHTML++;
-}, 100)
+}, 100);
 
 setInterval(function() {
   update(enemies);
