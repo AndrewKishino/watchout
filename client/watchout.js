@@ -4,9 +4,10 @@ var width = 960;
 var height = 500;
 var current = document.getElementsByClassName("currentScore")[0].innerHTML;
 var high = document.getElementsByClassName("highScore")[0].innerHTML;
+var collisionCount = document.getElementsByClassName("collisionCount")[0].innerHTML
 var enemies = [];
 
-for(var i = 0; i < 30; i++) {
+for(var i = 0; i < 20; i++) {
   enemies[i] = {}
 }
 
@@ -55,16 +56,15 @@ var update = function(array) {
 }
 
 var checkCollisions = function() {
-  for(var i = 0; i < 30; i++) {
-    var run = hero[0][0].getAttribute('cx') - enemies[i].x;
-    var rise = hero[0][0].getAttribute('cy') - enemies[i].y;
+  for(var i = 0; i < 20; i++) {
+    var run = hero[0][0].getAttribute('cx') - document.getElementsByClassName('enemy')[i].getAttribute("cx");
+    var rise = hero[0][0].getAttribute('cy') - document.getElementsByClassName('enemy')[i].getAttribute("cy");
     
-    if(Math.sqrt((rise*rise)+(run*run)) < 35) {
-      // collision counter++
-      // reset score
-
+    if(Math.sqrt((rise*rise)+(run*run)) < 20) {
       document.getElementsByClassName("currentScore")[0].innerHTML=0;
-      console.log("OUCH!")
+      setTimeout(function(){
+        collisionCount = document.getElementsByClassName("collisionCount")[0].innerHTML++;
+      }, 1000);
     }
   }
 }
@@ -73,16 +73,15 @@ update(enemies);
 
 setInterval(function(){
   if(Number(document.getElementsByClassName("highScore")[0].innerHTML) < Number(document.getElementsByClassName("currentScore")[0].innerHTML)) {
-        console.log("this should happen")
-        document.getElementsByClassName("highScore")[0].innerHTML = document.getElementsByClassName("currentScore")[0].innerHTML;
-      }
-  checkCollisions()
-}, 10)
+    document.getElementsByClassName("highScore")[0].innerHTML = document.getElementsByClassName("currentScore")[0].innerHTML;
+  }
+  checkCollisions();
+}, 1)
 
 setInterval(function(){
   current = document.getElementsByClassName("currentScore")[0].innerHTML++;
 }, 100)
 
 setInterval(function() {
-  update(enemies)
+  update(enemies);
 }, 1500);
