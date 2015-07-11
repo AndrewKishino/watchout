@@ -11,6 +11,11 @@ for(var i = 0; i < 20; i++) {
   enemies[i] = {}
 }
 
+for(var i = 0; i < enemies.length; i++) {
+    enemies[i].x = Math.random()*width;
+    enemies[i].y = Math.random()*height;
+  } 
+
 var drag = d3.behavior.drag().on('drag', function() { 
   if((d3.event.x > 0 && d3.event.x < width) && (d3.event.y > 0 && d3.event.y < height)) {
     hero.attr('cx', d3.event.x)
@@ -23,13 +28,14 @@ var svg = d3.select(".container").append("svg")
   .attr("width", width)
   .attr("height", height);
 
-svg.selectAll("circle").data(enemies)
-  .enter().append("circle")
+svg.selectAll(".enemy").data(enemies)
+  .enter().append("image")
+  .attr("width", "30")
+  .attr("height", "30")
+  .attr("xlink:href", "Shuriken.png")
   .attr("class", "enemy")
-  .attr("cx", function (d){return d.x;})
-  .attr("cy", function (d){return d.y;})
-  .attr("r", 15)
-  .attr("fill", "red");
+  .attr("x", function (d){return d.x;})
+  .attr("y", function (d){return d.y;});
 
 var hero = d3.select(".board").append("circle")
   .attr("class", "hero")
@@ -45,20 +51,18 @@ var update = function(array) {
     enemies[i].y = Math.random()*height;
   }
 
-  svg.selectAll("circle").data(enemies)
+  svg.selectAll(".enemy").data(enemies)
     .transition()
     .duration(1500)
     .attr("class", "enemy")
-    .attr("cx", function (d){return d.x;})
-    .attr("cy", function (d){return d.y;})
-    .attr("r", 15)
-    .attr("fill", "red");
+    .attr("x", function (d){return d.x;})
+    .attr("y", function (d){return d.y;})
 }
 
 var checkCollisions = function() {
   for(var i = 0; i < 20; i++) {
-    var run = hero[0][0].getAttribute('cx') - document.getElementsByClassName('enemy')[i].getAttribute("cx");
-    var rise = hero[0][0].getAttribute('cy') - document.getElementsByClassName('enemy')[i].getAttribute("cy");
+    var run = hero[0][0].getAttribute('cx') - document.getElementsByClassName('enemy')[i].getAttribute("x");
+    var rise = hero[0][0].getAttribute('cy') - document.getElementsByClassName('enemy')[i].getAttribute("y");
     
     if(Math.sqrt((rise*rise)+(run*run)) < 20) {
       document.getElementsByClassName("currentScore")[0].innerHTML=0;
