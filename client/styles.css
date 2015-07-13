@@ -3,14 +3,16 @@
 /* Note: an asteroid image is included in this repo.
 Feel free to use it if you like. */
 body {
-
+  background-color: grey;
 }
 .container {
   text-align: center;
 }
 .board {
-  margin:0 auto;
+  margin: 0 auto;
   border: black solid 1px;
+  background-color: gainsboro;
+  box-shadow: 2px 2px 5px #5C5A5A;
 }
 .enemy {
   -webkit-transform-origin: 50% 50%;
@@ -29,7 +31,13 @@ body {
   100% { -webkit-transform: rotate(360deg); }
 }
 .scoreboard{
-
+  width: 140px;
+  box-shadow: 2px 2px 5px #5C5A5A;
+  border: solid black 2px;
+  margin: 5px 3px;
+  padding: 5px 30px 5px 10px;
+  background-color: white;
+  border-radius: 5px;
 }
 .container{
 

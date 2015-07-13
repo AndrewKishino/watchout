@@ -65,7 +65,7 @@ var checkCollisions = function() {
     var run = hero[0][0].getAttribute('cx') - document.getElementsByClassName('enemy')[i].getAttribute("x");
     var rise = hero[0][0].getAttribute('cy') - document.getElementsByClassName('enemy')[i].getAttribute("y");
     
-    if(Math.sqrt((rise*rise)+(run*run)) < 20) {
+    if(Math.sqrt((rise*rise)+(run*run)) < 15) {
       document.getElementsByClassName("currentScore")[0].innerHTML=0;
       collisionCount = document.getElementsByClassName("collisionCount")[0].innerHTML++;
     }
@@ -81,7 +81,7 @@ setInterval(function(){
   if(document.getElementsByClassName("currentScore")[0].innerHTML > 5) {
     checkCollisions();
   }
-}, 10);
+}, 1);
 
 setInterval(function(){
   current = document.getElementsByClassName("currentScore")[0].innerHTML++;
