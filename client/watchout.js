@@ -1,14 +1,13 @@
 // start slingin' some d3 here.
-
 var width = 960;
 var height = 500;
 var current = document.getElementsByClassName("currentScore")[0].innerHTML;
 var high = document.getElementsByClassName("highScore")[0].innerHTML;
-var collisionCount = document.getElementsByClassName("collisionCount")[0].innerHTML
+var collisionCount = document.getElementsByClassName("collisionCount")[0].innerHTML;
 var enemies = [];
 
 for(var i = 0; i < 20; i++) {
-  enemies[i] = {}
+  enemies[i] = {};
 }
 
 for(var i = 0; i < enemies.length; i++) {
@@ -17,9 +16,11 @@ for(var i = 0; i < enemies.length; i++) {
   } 
 
 var drag = d3.behavior.drag().on('drag', function() { 
-  if((d3.event.x > 0 && d3.event.x < width) && (d3.event.y > 0 && d3.event.y < height)) {
-    hero.attr('cx', d3.event.x)
-        .attr('cy', d3.event.y); 
+  if(d3.event.x > 15 && d3.event.x < width-15) {
+    hero.attr('cx', d3.event.x); 
+  }
+  if(d3.event.y > 15 && d3.event.y < height-15) {
+    hero.attr('cy', d3.event.y); 
   }
 });
 
@@ -80,7 +81,7 @@ setInterval(function(){
   if(document.getElementsByClassName("currentScore")[0].innerHTML > 5) {
     checkCollisions();
   }
-}, 1);
+}, 10);
 
 setInterval(function(){
   current = document.getElementsByClassName("currentScore")[0].innerHTML++;
